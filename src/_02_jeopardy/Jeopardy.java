@@ -39,6 +39,7 @@ public class Jeopardy implements ActionListener {
 	private JLabel scoreBox = new JLabel("0");
 	private int buttonCount = 0;
 	private Sound jeopardyThemeClip;
+	;
 
 
 
@@ -119,14 +120,17 @@ buttonCount++;
 		// If the buttonPressed was the firstButton
 if(buttonPressed == firstButton) {
 			// Call the askQuestion() method
-askQuestion("Who is the author of the 'Harry Potter' series?", "Who is J.K Rowling?", 200);
+askQuestion("Who is the author of the 'Harry Potter' series? Remember to put your answer in question form!", "Who is J.K Rowling?", 200);
 }
 		// Complete the code in the askQuestion() method. When you play the game, the score should change.
 
 		// If the buttonPressed was the secondButton
+if (buttonPressed == secondButton) {
+	
 
 			// Call the askQuestion() method with a harder question
-
+askQuestion("What is the smallest country in the world? Remember to put your answer in question form!", "What is Vatican City?", 400); 
+	}
 		// Clear the text on the button that was pressed (set the button text to nothing)
 
 	}
@@ -136,23 +140,32 @@ askQuestion("Who is the author of the 'Harry Potter' series?", "Who is J.K Rowli
 		// Use the playJeopardyTheme() method to play music while the use thinks of an answer
 		playJeopardyTheme();
 		// Remove this temporary message and replace it with a pop-up that asks the user the question
-		JOptionPane.showMessageDialog(null, question);
+	String Answer = JOptionPane.showInputDialog(question);
 		
-		// Stop the theme music when they have entered their response.
-		
+		// Stop the theme music when they have entered their response
+		if (correctAnswer.equalsIgnoreCase(Answer)) {
+			stopJeopardyTheme();
+		} else {
+			stopJeopardyTheme();
+		}
 		// If the answer is correct
+if (correctAnswer.equalsIgnoreCase(Answer)) {
+	
 
 			// Increase the score by the prizeMoney
-
+score += prizeMoney;
 			// Pop up a message to tell the user they were correct
+JOptionPane.showMessageDialog(null, "Congratulations! You are correct! " + prizeMoney + " dollars are added to your total! Your total has been updated to " + score + " dollars!!!!!!");
 
 		// Otherwise
-
+} else {
 			// Decrement the score by the prizeMoney
-
+score -= prizeMoney;
 			// Pop up a message to tell the user they were wrong and give them the correct answer
-
+JOptionPane.showMessageDialog(null, "Oops! You are incorrect! The real answer was '" + correctAnswer + "' Now, " + prizeMoney + " dollars have been removed from your total. Your score has been updated to " + score + " dollars.");
+}
 		// Call the updateScore() method
+updateScore();
 
 	}
 
