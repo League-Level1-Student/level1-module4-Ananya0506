@@ -16,12 +16,13 @@ public class TypingTutor implements KeyListener {
 	JFrame frame = new JFrame();
 	JPanel panel = new JPanel();
 	char currentLetter;
-	String cLetter = String.valueOf(currentLetter);
+	String cLetter;
 	JLabel label = new JLabel();
 	void setup(){
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		currentLetter = generateRandomLetter();
+		cLetter = String.valueOf(currentLetter);
 		label.setText(cLetter);
 		label.setFont(label.getFont().deriveFont(28.0f));
 		label.setHorizontalAlignment(JLabel.CENTER);
@@ -31,7 +32,8 @@ public class TypingTutor implements KeyListener {
 		frame.pack();
 	}
 	char generateRandomLetter() {
-	    Random r = new Random();
+
+		Random r = new Random();
 	    return (char) (r.nextInt(26) + 'a');
 	}
 	
@@ -43,18 +45,23 @@ public class TypingTutor implements KeyListener {
 	}
 	@Override
 	public void keyPressed(KeyEvent e) {
-		System.out.println(e.getKeyChar());
-		if (e.getKeyChar() == currentLetter) {
+					System.out.println(e.getKeyChar());
+		String s = String.valueOf(e.getKeyChar());
+		if (s.equals(cLetter)) {
 			System.out.println("correct");
 			panel.setBackground(Color.GREEN);
+			currentLetter = generateRandomLetter();
+			cLetter = String.valueOf(currentLetter);
+			label.setText(cLetter);
 		} else { 
 			System.out.println("incorrect");
 			panel.setBackground(Color.RED);
+			}
 		}
-		
-	}
+	
 	@Override
 	public void keyReleased(KeyEvent e) {
+		
 		currentLetter = generateRandomLetter();
 		label.setText(cLetter);
 		
