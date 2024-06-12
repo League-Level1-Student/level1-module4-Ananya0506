@@ -1,10 +1,15 @@
 package _11_lights_out;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -20,13 +25,20 @@ import javax.swing.JPanel;
 public class LightsOut implements MouseListener {
 
 	JPanel gamePanel = new JPanel();
-
+JFrame f = new JFrame();
 	public LightsOut() {
 
 		/** PART 1. CREATE YOUR LIGHT BOARD **/
 		//1. Make your gamePanel a 5x5 grid with setLayout(new GridLayout(5, 5));
-		
-		
+		gamePanel.setLayout(new GridLayout(5, 5));
+		for(int i=0; i<25; i++) {
+			JLabel l = new JLabel();
+		gamePanel.add(l);
+		l.setText(Integer.toString(i));
+		l.setBackground(Color.lightGray);
+		l.setOpaque(true);
+		l.addMouseListener(this);
+		}
 			//2. Add 25 JLabels to your gamePanel (these are your lights)
 
 			//3. Use setText() to add a position number to each light (0-24).
@@ -39,25 +51,37 @@ public class LightsOut implements MouseListener {
 		
 		
 		//6. Add your panel to a frame
-
+f.getContentPane().setLayout(new BoxLayout(f.getContentPane(), BoxLayout.Y_AXIS));
+		f.setVisible(true);
+		f.add(gamePanel);
 		//7. Set the size of the frame
-
+f.setSize(new Dimension(500, 500));
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		/** PART 2: TOGGLE NEIGHBORING LIGHTS **/
 		// 1. Get the light that was clicked on `(JLabel) e.getSource`
-
+JLabel clicked = (JLabel)e.getSource();
 		// 2. Get the number (position) of the light
-
-		// 3. Now use the makeMove method to code which lights turn on and off.
-
+String pos  = clicked.getText();
+int p = Integer.parseInt(pos);		
+// 3. Now use the makeMove method to code which lights turn on and off.
+makeMove(p);
 		// 4.Check if the player has won (e.g. all the lights are off)
 		// ---- HINT: use `getLightAtPosition` to get the light at each position
 		// ---------- use 'getBackground' to get the light color
-
-		/** PART 3: RANDOMIZE YOUR BOARD **/
+int off =0;
+for(int a=0; a<25; a++) {
+	JLabel label = getLightAtPosition(a);
+if(label.getBackground() == Color.lightGray) {
+	off++;
+	}
+}
+if(off == 25) {	
+	JOptionPane.showMessageDialog(null, "YOU WON");
+}
+/** PART 3: RANDOMIZE YOUR BOARD **/
 		// Now that your game works can you make the game start with some lights on?
 
 	}
